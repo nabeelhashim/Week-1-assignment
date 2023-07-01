@@ -15,13 +15,14 @@ function isAnagram(str1, str2) {
   } else {
     let matchIndex = 0;
     for(let i = 0; i < str1.length; i++) {
-      var matchArray = [];
+      var matchRate = 0;
       for (let j = 0; j < str1.length; j++) {
         if (str1.charAt(i) == str2.charAt(j)) {
-          matchArray.push(str2.charAt(j));
+          matchRate++;
         }
       }
-      if(matchArray.length > 0) {
+      let letterCount = countOccurance(str1.charAt(i), str1);
+      if(matchRate > 0 && matchRate == letterCount) {
         matchIndex++;
       }
     }
@@ -33,7 +34,14 @@ function isAnagram(str1, str2) {
   }
 }
 
-let result = isAnagram("dfffg", "ffdgf");
-console.log(result);
+function countOccurance(letter, Str) {
+  let count = 0;
+  for (let i = 0; i < Str.length; i++) {
+    if (letter == Str.charAt(i)) {
+      count++;
+    }
+  }
+  return count;
+}
 
 module.exports = isAnagram;
