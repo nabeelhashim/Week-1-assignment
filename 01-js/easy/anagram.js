@@ -43,7 +43,5 @@ function countOccurance(letter, Str) {
   }
   return count;
 }
-let result = isAnagram("dfgs", "dgfs");
-console.log(result);
 
 module.exports = isAnagram;
