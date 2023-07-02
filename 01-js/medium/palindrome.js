@@ -7,7 +7,16 @@
 */
 
 function isPalindrome(str) {
-  return true;
+  let reversedString = "";
+  for (let i = str.length; i >= 0; i--) {
+    reversedString = reversedString + str.charAt(i);
+  }
+  if (reversedString.toUpperCase() == str.toUpperCase()) {
+    return true;
+  } else {
+    return false;
+  }
 }
+
 
 module.exports = isPalindrome;
