@@ -164,9 +164,4 @@ function checkIfValidExpression(expression) {
   }
 }
 
-let calculate = new Calculator();
-
-calculate.calculate("10 - (4 + 2)");
-console.log(calculate.getResult());
-
 module.exports = Calculator;
