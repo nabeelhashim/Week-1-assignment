@@ -47,7 +47,7 @@ class Calculator {
     }
 
     this.result = evaluateExpression(expression);
-    console.log("final result : " + this.result);
+    return this.result;
   }
 }
 
@@ -57,10 +57,8 @@ function evaluateExpression(expression) {
   let i = 0;
 
   while (i < expression.length) {
-    console.log("value : " + values )
     let char = expression[i];
 
-    // console.log(expression[i]);
     if (char === "(") {
       operators.push(char);
     } else if (!isNaN(char)) {
@@ -72,7 +70,7 @@ function evaluateExpression(expression) {
       values.push(parseFloat(num));
       continue;
     } else if (char === ")") {
-      while (operators.length > 0 && expression[operators.length - 1] != "(") {
+      while (operators.length > 0 && operators[operators.length - 1] != "(") {
         let secondElement = values.pop();
         let fistElement = values.pop();
         let operator = operators.pop();
@@ -82,7 +80,7 @@ function evaluateExpression(expression) {
     } else {
       while (
         operators.length !== 0 &&
-        getPriority(char) <= getPriority(expression[expression.length - 1])
+        getPriority(char) <= getPriority(operators[operators.length - 1])
       ) {
         let secondElement = values.pop();
         let firstElement = values.pop();
@@ -117,9 +115,6 @@ function getPriority(operator) {
 }
 
 function execupeOperation(fistElement, secondElement, operator) {
-  console.log("fistElement : " + fistElement );
-  console.log("secondElement : " +  secondElement);
-  console.log("operator : " + operator);
   switch (operator) {
     case "+":
       return fistElement + secondElement;
@@ -132,10 +127,8 @@ function execupeOperation(fistElement, secondElement, operator) {
       break;
     case "/":
       if(fistElement !== 0 && secondElement !== 0) {
-        console.log("result : " + fistElement / secondElement);
         return fistElement / secondElement;
       } else {
-        console.log("error ");
         throw new Error("not able to divide");
       }
       break;
@@ -146,16 +139,21 @@ function execupeOperation(fistElement, secondElement, operator) {
 }
 
 function checkIfValidExpression(expression) {
+
+  let regExp = /[a-zA-Z]/g;
+  if(regExp.test(expression)){
+    throw new Error("expression contains invalid characters");
+  } 
+
   let matchStack = 0;
   let open = "(";
   let close = ")";
 
   for (let element of expression) {
-    console.log(element);
     if (element == open) {
       matchStack++;
     }
-    if (element == close) {
+    if (element == close && matchStack !== 0) {
       matchStack--;
     }
   }
@@ -168,12 +166,7 @@ function checkIfValidExpression(expression) {
 
 let calculate = new Calculator();
 
-calculate.calculate("(10 + 0)");
-// let sum = calculate.add(5);
-// calculate.add(5);
-// calculate.multiply(10);
-// console.log(calculate.getResult());
-// calculate.clear();
-// console.log(calculate.getResult());
+calculate.calculate("10 - (4 + 2)");
+console.log(calculate.getResult());
 
 module.exports = Calculator;
